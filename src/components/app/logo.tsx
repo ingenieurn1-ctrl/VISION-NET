@@ -10,10 +10,10 @@ export function LogoMark({ className = "size-8" }: { className?: string }) {
   );
 }
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", showMark = true }: { className?: string; showMark?: boolean }) {
   return (
     <div className={`flex min-w-0 items-center gap-2.5 ${className}`}>
-      <LogoMark />
+      {showMark && <LogoMark />}
       <span className="truncate text-[1.05rem] font-semibold tracking-tight">
         Vision<span className="text-primary">Net</span>
       </span>

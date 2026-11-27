@@ -48,7 +48,7 @@ function AppLayout() {
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur sm:px-8">
           <SidebarTrigger />
-          <Logo className="md:hidden" />
+          <Logo className="md:hidden" showMark={false} />
           <div className="ml-auto flex items-center gap-1">
             <span className="mr-2 hidden max-w-48 truncate text-sm text-muted-foreground sm:inline">{user.email}</span>
             <ThemeToggle />

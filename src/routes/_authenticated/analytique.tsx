@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { subDays } from "date-fns";
 import type { DateRange } from "react-day-picker";
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Sankey, Tooltip, XAxis, YAxis, ResponsiveContainer, Layer, Rectangle } from "recharts";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Link } from "@tanstack/react-router";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/app/page-header";
 import { EmptyState } from "@/components/app/empty-state";
 import { DateRangePicker } from "@/components/app/date-range-picker";
+import { FlowMap } from "@/components/app/flow-map";
 import { FunnelChart } from "@/components/app/funnel-chart";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -146,25 +147,9 @@ function Page() {
       <Card className="mt-4 gap-0 p-5 sm:p-6">
         <h2 className="mb-4 text-sm font-medium">Cartographie source → SaaS → étape</h2>
         {loading ? <Skeleton className="h-72 w-full" /> : !flow.links.length ? <EmptyState title="Aucun parcours attribué" /> : (
-          <div className="overflow-x-auto"><div className="h-80 min-w-[36rem]">
-            <ResponsiveContainer>
-              <Sankey data={flow} nodePadding={24} margin={{ top: 8, bottom: 8, left: 8, right: 110 }} link={{ stroke: "var(--chart-1)", strokeOpacity: 0.25 }} node={<FlowNode />}>
-                <Tooltip />
-              </Sankey>
-            </ResponsiveContainer>
-          </div></div>
+          <FlowMap data={flow} />
         )}
       </Card>
     </>
-  );
-}
-
-type NodeProps = { x?: number; y?: number; width?: number; height?: number; payload?: { name: string; value: number } };
-function FlowNode({ x = 0, y = 0, width = 0, height = 0, payload }: NodeProps) {
-  return (
-    <Layer>
-      <Rectangle x={x} y={y} width={width} height={height} fill="var(--chart-1)" fillOpacity={0.9} radius={2} />
-      <text x={x + width + 6} y={y + height / 2} dy="0.35em" fontSize={12} fill="currentColor">{payload?.name} · {payload?.value}</text>
-    </Layer>
   );
 }

@@ -152,6 +152,7 @@ export type Database = {
           ref_code: string | null
           saas_id: string
           step: string
+          visitor_id: string | null
         }
         Insert: {
           created_at?: string
@@ -163,6 +164,7 @@ export type Database = {
           ref_code?: string | null
           saas_id: string
           step?: string
+          visitor_id?: string | null
         }
         Update: {
           created_at?: string
@@ -174,6 +176,7 @@ export type Database = {
           ref_code?: string | null
           saas_id?: string
           step?: string
+          visitor_id?: string | null
         }
         Relationships: [
           {
@@ -242,10 +245,15 @@ export type Database = {
           api_key_hash: string | null
           api_key_prefix: string | null
           created_at: string
+          first_visit_at: string | null
           id: string
           last_event_at: string | null
+          last_server_event_at: string | null
+          last_visit_at: string | null
           logo_url: string | null
           name: string
+          public_key: string | null
+          site_id: string | null
           url: string
           webhook_secret_encrypted: string | null
         }
@@ -253,10 +261,15 @@ export type Database = {
           api_key_hash?: string | null
           api_key_prefix?: string | null
           created_at?: string
+          first_visit_at?: string | null
           id?: string
           last_event_at?: string | null
+          last_server_event_at?: string | null
+          last_visit_at?: string | null
           logo_url?: string | null
           name: string
+          public_key?: string | null
+          site_id?: string | null
           url: string
           webhook_secret_encrypted?: string | null
         }
@@ -264,10 +277,15 @@ export type Database = {
           api_key_hash?: string | null
           api_key_prefix?: string | null
           created_at?: string
+          first_visit_at?: string | null
           id?: string
           last_event_at?: string | null
+          last_server_event_at?: string | null
+          last_visit_at?: string | null
           logo_url?: string | null
           name?: string
+          public_key?: string | null
+          site_id?: string | null
           url?: string
           webhook_secret_encrypted?: string | null
         }
@@ -279,7 +297,9 @@ export type Database = {
           channel: Database["public"]["Enums"]["link_channel"]
           code: string
           created_at: string
+          destination_path: string | null
           id: string
+          link_mode: string
           name: string
           saas_id: string
         }
@@ -288,7 +308,9 @@ export type Database = {
           channel?: Database["public"]["Enums"]["link_channel"]
           code: string
           created_at?: string
+          destination_path?: string | null
           id?: string
+          link_mode?: string
           name: string
           saas_id: string
         }
@@ -297,7 +319,9 @@ export type Database = {
           channel?: Database["public"]["Enums"]["link_channel"]
           code?: string
           created_at?: string
+          destination_path?: string | null
           id?: string
+          link_mode?: string
           name?: string
           saas_id?: string
         }
@@ -331,7 +355,18 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      visits_unified: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          link_id: string | null
+          referrer: string | null
+          saas_id: string | null
+          source: string | null
+          visitor_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       bump_rate_limit: {
@@ -362,6 +397,8 @@ export type Database = {
         | "onboarding_step"
         | "subscription_activated"
         | "subscription_cancelled"
+        | "visit"
+        | "activation"
       link_channel:
         | "facebook"
         | "whatsapp"
@@ -503,6 +540,8 @@ export const Constants = {
         "onboarding_step",
         "subscription_activated",
         "subscription_cancelled",
+        "visit",
+        "activation",
       ],
       link_channel: [
         "facebook",

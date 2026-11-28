@@ -38,3 +38,4 @@ use the editor.
 - Per-user journey tracking (Évolution page) is derived client-side from events via userJourneys() in src/lib/analytics.ts; no extra table, so it always matches the raw events.
 
 - Brand logo is an inline SVG in src/components/app/logo.tsx (LogoMark + Logo) using theme tokens, so it follows light/dark mode; public/favicon.svg mirrors it.
+- Mode B migration (direct links + tracker.js) is additive: /r/<code> redirect links stay working with link_mode='redirect'; visits_unified view merges legacy clicks and 'visit' events so historical stats stay consistent.

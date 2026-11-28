@@ -115,7 +115,7 @@ function NewLinkDialog({ open, onOpenChange, saasId, origin, onCreated }: { open
       const p = linkInput.parse(form);
       for (let i = 0; i < 3; i++) {
         const code = generateCode();
-        const { error } = await supabase.from("tracking_links").insert({ saas_id: saasId, code, name: p.name, channel: p.channel, campaign: p.campaign || null });
+        const { error } = await supabase.from("tracking_links").insert({ saas_id: saasId, code, link_mode: "redirect", name: p.name, channel: p.channel, campaign: p.campaign || null });
         if (!error) return code;
         if (error.code !== "23505") throw error;
       }

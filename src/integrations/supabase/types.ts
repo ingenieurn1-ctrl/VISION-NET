@@ -219,6 +219,24 @@ export type Database = {
         }
         Relationships: []
       }
+      ip_rate_limits: {
+        Row: {
+          hits: number
+          key: string
+          window_start: string
+        }
+        Insert: {
+          hits?: number
+          key: string
+          window_start: string
+        }
+        Update: {
+          hits?: number
+          key?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -247,6 +265,8 @@ export type Database = {
           created_at: string
           first_visit_at: string | null
           id: string
+          last_error: string | null
+          last_error_at: string | null
           last_event_at: string | null
           last_server_event_at: string | null
           last_visit_at: string | null
@@ -263,6 +283,8 @@ export type Database = {
           created_at?: string
           first_visit_at?: string | null
           id?: string
+          last_error?: string | null
+          last_error_at?: string | null
           last_event_at?: string | null
           last_server_event_at?: string | null
           last_visit_at?: string | null
@@ -279,6 +301,8 @@ export type Database = {
           created_at?: string
           first_visit_at?: string | null
           id?: string
+          last_error?: string | null
+          last_error_at?: string | null
           last_event_at?: string | null
           last_server_event_at?: string | null
           last_visit_at?: string | null
@@ -302,6 +326,7 @@ export type Database = {
           link_mode: string
           name: string
           saas_id: string
+          system_kind: string | null
         }
         Insert: {
           campaign?: string | null
@@ -313,6 +338,7 @@ export type Database = {
           link_mode?: string
           name: string
           saas_id: string
+          system_kind?: string | null
         }
         Update: {
           campaign?: string | null
@@ -324,6 +350,7 @@ export type Database = {
           link_mode?: string
           name?: string
           saas_id?: string
+          system_kind?: string | null
         }
         Relationships: [
           {
@@ -369,6 +396,10 @@ export type Database = {
       }
     }
     Functions: {
+      bump_key_rate_limit: {
+        Args: { _key: string; _limit: number }
+        Returns: boolean
+      }
       bump_rate_limit: {
         Args: { _limit: number; _saas_id: string }
         Returns: boolean
@@ -389,6 +420,16 @@ export type Database = {
           signups: number
         }[]
       }
+      link_stats_v2: {
+        Args: { _saas_id: string }
+        Returns: {
+          activations: number
+          link_id: string
+          signups: number
+          subscriptions: number
+          visits: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "user"
@@ -407,6 +448,8 @@ export type Database = {
         | "instagram"
         | "youtube"
         | "other"
+        | "unknown"
+        | "invalid"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -551,6 +594,8 @@ export const Constants = {
         "instagram",
         "youtube",
         "other",
+        "unknown",
+        "invalid",
       ],
     },
   },

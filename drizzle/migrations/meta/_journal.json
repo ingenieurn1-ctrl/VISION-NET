@@ -15,6 +15,20 @@
       "when": 1795856109328,
       "tag": "0001_visionnet_mode_b_step1",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795856328869,
+      "tag": "0002_link_channel_system_values",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795856351325,
+      "tag": "0003_mode_b_system_links_and_stats",
+      "breakpoints": true
     }
   ]
 }
